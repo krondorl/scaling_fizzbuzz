@@ -6,7 +6,7 @@ I wanted to go beyond simple coding, by scaling the FizzBuzz algorithm using Rus
 
 ## Inspiration
 
-I was inspired by the Code GolF competition on [Code Golf Stack Exchange](https://codegolf.stackexchange.com/) called [High Throughput Fizz Buzz](https://codegolf.stackexchange.com/questions/215216/high-throughput-fizz-buzz/).
+I was inspired by the Code Golf competition on [Code Golf Stack Exchange](https://codegolf.stackexchange.com/) called [High Throughput Fizz Buzz](https://codegolf.stackexchange.com/questions/215216/high-throughput-fizz-buzz/).
 
 ## Source Code
 
