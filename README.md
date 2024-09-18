@@ -17,7 +17,7 @@ The code is in the `src/bin` folder.
 1. Install [the Rust tools](https://www.rust-lang.org/tools/install).
 1. Install `hyperfine`, by executing `cargo install hyperfine`
 
-## Running separate binaries
+## Running Separate Binaries
 
 Inside the project folder run this:
 
@@ -34,6 +34,14 @@ hyperfine 'cargo run --release --bin 01-fb-for' 'cargo run --release --bin 02-fb
 ```
 
 This will compare separate programs inside `bin`.
+
+## Configuration
+
+You can set the maximum iteration number in the `config.toml` file.
+
+```
+max_iter = 10000
+```
 
 ## License
 
