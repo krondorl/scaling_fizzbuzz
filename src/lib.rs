@@ -26,7 +26,7 @@ pub mod helpers {
         if !parsed_settings.is_empty() {
             match parsed_settings.get(key) {
                 Some(&value) => Ok(value),
-                None => Err(String::from("Error: Cannot get max_iter value")),
+                None => Err(String::from("Error: Cannot get key value")),
             }
         } else {
             Err(String::from(
