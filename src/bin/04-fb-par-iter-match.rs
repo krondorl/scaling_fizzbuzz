@@ -5,7 +5,7 @@ use rayon::prelude::*;
 use scaling_fizzbuzz::*;
 use std::collections::HashMap;
 
-fn fizz_buzz_par_iter(numbers: &Vec<u32>) {
+fn fizz_buzz_par_iter_match(numbers: &Vec<u32>) {
     if numbers.len() < 3 {
         println!("Error: input parameter should be at least 3.");
         return;
@@ -51,5 +51,5 @@ fn main() {
 
     let v: Vec<u32> = (1..=max_iter).collect();
 
-    fizz_buzz_par_iter(&v);
+    fizz_buzz_par_iter_match(&v);
 }
