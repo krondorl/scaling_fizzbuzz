@@ -28,7 +28,7 @@ fn fizz_buzz_par_iter(numbers: &Vec<u32>) {
 
 fn main() {
     println!("Scaling FizzBuzz");
-    println!("Multithreaded version with Rayon");
+    println!("Multithreaded match version with Rayon");
     println!();
 
     let settings = get_settings("config");
