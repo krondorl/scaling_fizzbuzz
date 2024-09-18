@@ -30,10 +30,10 @@ cargo run --bin 01-fb-for
 Go to the repo folder then execute the following:
 
 ```
-hyperfine 'cargo run --release --bin 01-fb-for' 'cargo run --release --bin 02-fb-match' 'cargo run --release --bin 03-fb-par-iter'
+hyperfine --warmup 1 'cargo run --release --bin 01-fb-for' 'cargo run --release --bin 02-fb-match' 'cargo run --release --bin 03-fb-par-iter' 'cargo run --release --bin 04-fb-par-iter-match' 'cargo run --release --bin 05-fb-par-iter-match-buf'
 ```
 
-This will compare separate programs inside `bin`.
+This will compare all programs inside `bin`.
 
 ## Configuration
 
