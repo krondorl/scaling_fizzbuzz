@@ -35,6 +35,8 @@ hyperfine --warmup 1 'cargo run --release --bin 01-fb-for' 'cargo run --release 
 
 This will compare all programs inside `bin`.
 
+![Console Benchmark Results](/docs/benchmark.png "Console Benchmark Results")
+
 ## Configuration
 
 You can set the maximum iteration number in the `config.toml` file.
