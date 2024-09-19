@@ -1,27 +1,25 @@
 // Copyright 2024 Adam Burucs. MIT license.
 
-use helpers::{get_key, get_settings};
+use helpers::{get_key, get_settings, print_vector};
 use scaling_fizzbuzz::*;
 use std::collections::HashMap;
 
-fn fizz_buzz_match(n: u32) {
+fn fizz_buzz_match(n: u32) -> Result<Vec<String>, String> {
     if n < 3 {
-        println!("Error: input parameter should be at least 3.");
-        return;
+        return Err(String::from("Error: input parameter should be at least 3."));
     }
+    let mut result: Vec<String> = Vec::new();
     for i in 1..=n {
-        let output: String; // Declare a string to store the number if needed
-        let output_str: &str = match i % 15 {
-            0 => "FizzBuzz",
-            3 | 6 | 9 | 12 => "Fizz",
-            5 | 10 => "Buzz",
+        match i % 15 {
+            0 => result.push(String::from("FizzBuzz")),
+            3 | 6 | 9 | 12 => result.push(String::from("Fizz")),
+            5 | 10 => result.push(String::from("Buzz")),
             _ => {
-                output = i.to_string(); // Convert the number to a String
-                &output // Return a reference to the string
+                result.push(i.to_string());
             }
         };
-        println!("{output_str}");
     }
+    Ok(result)
 }
 
 fn main() {
@@ -47,5 +45,9 @@ fn main() {
         Err(e) => println!("{e}"),
     }
 
-    fizz_buzz_match(max_iter);
+    let fb = fizz_buzz_match(max_iter);
+    match fb {
+        Ok(fb_vec) => print_vector(&fb_vec),
+        Err(e) => println!("{e}"),
+    }
 }

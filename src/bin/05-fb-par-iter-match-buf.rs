@@ -1,15 +1,13 @@
 // Copyright 2024 Adam Burucs. MIT license.
 
-use helpers::{get_key, get_settings};
+use helpers::{get_key, get_settings, print_vec_stdout};
 use rayon::prelude::*;
 use scaling_fizzbuzz::*;
 use std::collections::HashMap;
-use std::io::{self, BufWriter, Write};
 
-fn fizz_buzz_par_iter_match(numbers: &Vec<u32>) {
+fn fizz_buzz_par_iter_match(numbers: &Vec<u32>) -> Result<Vec<String>, String> {
     if numbers.len() < 3 {
-        println!("Error: input parameter should be at least 3.");
-        return;
+        return Err(String::from("Error: input parameter should be at least 3."));
     }
 
     let results: Vec<String> = numbers
@@ -22,27 +20,7 @@ fn fizz_buzz_par_iter_match(numbers: &Vec<u32>) {
         })
         .collect();
 
-    let stdout = io::stdout();
-    let handle = stdout.lock(); // Lock stdout to avoid data races
-    let mut buf_writer = BufWriter::new(handle);
-
-    // Write multiple lines using buffered I/O
-    for result in results {
-        match writeln!(buf_writer, "{}", result) {
-            Ok(_) => {} // Successfully wrote the line, nothing to do
-            Err(e) => {
-                eprintln!("Failed to write to buffer: {}", e);
-            }
-        }
-    }
-
-    // Explicitly flush the buffer to make sure all output is written
-    match buf_writer.flush() {
-        Ok(_) => {} // Successfully flushed
-        Err(e) => {
-            eprintln!("Failed to flush the buffer: {}", e);
-        }
-    }
+    Ok(results)
 }
 
 fn main() {
@@ -70,5 +48,9 @@ fn main() {
 
     let v: Vec<u32> = (1..=max_iter).collect();
 
-    fizz_buzz_par_iter_match(&v);
+    let fb = fizz_buzz_par_iter_match(&v);
+    match fb {
+        Ok(fb_vec) => print_vec_stdout(&fb_vec),
+        Err(e) => println!("{e}"),
+    }
 }

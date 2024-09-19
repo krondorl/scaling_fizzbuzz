@@ -1,14 +1,13 @@
 // Copyright 2024 Adam Burucs. MIT license.
 
-use helpers::{get_key, get_settings};
+use helpers::{get_key, get_settings, print_vector};
 use rayon::prelude::*;
 use scaling_fizzbuzz::*;
 use std::collections::HashMap;
 
-fn fizz_buzz_par_iter_match(numbers: &Vec<u32>) {
+fn fizz_buzz_par_iter_match(numbers: &Vec<u32>) -> Result<Vec<String>, String> {
     if numbers.len() < 3 {
-        println!("Error: input parameter should be at least 3.");
-        return;
+        return Err(String::from("Error: input parameter should be at least 3."));
     }
 
     let results: Vec<String> = numbers
@@ -21,9 +20,7 @@ fn fizz_buzz_par_iter_match(numbers: &Vec<u32>) {
         })
         .collect();
 
-    for result in results {
-        println!("{}", result);
-    }
+    Ok(results)
 }
 
 fn main() {
@@ -51,5 +48,9 @@ fn main() {
 
     let v: Vec<u32> = (1..=max_iter).collect();
 
-    fizz_buzz_par_iter_match(&v);
+    let fb = fizz_buzz_par_iter_match(&v);
+    match fb {
+        Ok(fb_vec) => print_vector(&fb_vec),
+        Err(e) => println!("{e}"),
+    }
 }
