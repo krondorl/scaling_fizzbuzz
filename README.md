@@ -39,10 +39,12 @@ This will compare all programs inside `bin`.
 
 ## Configuration
 
-You can set the maximum iteration number in the `config.toml` file.
+You can set the maximum iteration number in the `config.json` file.
 
 ```
-max_iter = 10000
+{
+    "max_iter": 1000
+}
 ```
 
 ## License
