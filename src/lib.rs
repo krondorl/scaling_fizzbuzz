@@ -1,26 +1,20 @@
 // Copyright 2024 Adam Burucs. MIT license.
 
 pub mod helpers {
-    use config::*;
+    use serde::Deserialize;
     use std::collections::HashMap;
+    use std::fs;
     use std::io::{self, BufWriter, Write};
 
-    pub fn get_settings(config: &str) -> Result<HashMap<String, u32>, String> {
-        let settings = Config::builder().add_source(config::File::with_name(config));
+    #[derive(Deserialize, Debug)]
+    pub struct Config {
+        pub max_iter: u32,
+    }
 
-        match settings.build() {
-            Ok(ok_settings) => {
-                // Config OK
-                let try_deser = ok_settings.try_deserialize::<HashMap<String, u32>>();
-                match try_deser {
-                    Ok(parsed_settings) => {
-                        Ok(parsed_settings) // Parsing OK
-                    }
-                    Err(_) => Err(String::from("Error: Cannot parse configuration")),
-                }
-            }
-            Err(_) => Err(String::from("Error: Cannot build configuration")),
-        }
+    pub fn read_config(filename: &str) -> Result<Config, Box<dyn std::error::Error>> {
+        let data = fs::read_to_string(filename)?;
+        let config: Config = serde_json::from_str(&data)?;
+        Ok(config)
     }
 
     pub fn get_key(parsed_settings: &HashMap<String, u32>, key: &str) -> Result<u32, String> {

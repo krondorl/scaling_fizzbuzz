@@ -1,8 +1,8 @@
 // Copyright 2024 Adam Burucs. MIT license.
 
-use helpers::{get_key, get_settings, print_vector};
+use helpers::{print_vector, read_config, Config};
 use scaling_fizzbuzz::*;
-use std::collections::HashMap;
+use std::error::Error;
 
 fn fizz_buzz_match(n: u32) -> Result<Vec<String>, String> {
     if n < 3 {
@@ -22,32 +22,20 @@ fn fizz_buzz_match(n: u32) -> Result<Vec<String>, String> {
     Ok(result)
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     println!("Scaling FizzBuzz");
     println!("Match loop version");
     println!();
 
-    let settings = get_settings("config");
-    let mut parsed_settings: HashMap<String, u32> = HashMap::new();
-    let mut max_iter: u32 = 1000;
-
-    match settings {
-        Ok(parsed_deser) => parsed_settings = parsed_deser,
-        Err(e) => println!("{e}"),
-    }
-
-    println!("{:#?}", parsed_settings);
-
-    let getting_key = get_key(&parsed_settings, "max_iter");
-
-    match getting_key {
-        Ok(value) => max_iter = value,
-        Err(e) => println!("{e}"),
-    }
+    let config = read_config("config.json")?;
+    let parsed_settings: Config = config;
+    let max_iter: u32 = parsed_settings.max_iter;
 
     let fb = fizz_buzz_match(max_iter);
     match fb {
         Ok(fb_vec) => print_vector(&fb_vec),
         Err(e) => println!("{e}"),
     }
+
+    Ok(())
 }
