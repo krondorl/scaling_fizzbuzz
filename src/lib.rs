@@ -2,7 +2,6 @@
 
 pub mod helpers {
     use serde::Deserialize;
-    use std::collections::HashMap;
     use std::fs;
     use std::io::{self, BufWriter, Write};
 
@@ -15,19 +14,6 @@ pub mod helpers {
         let data = fs::read_to_string(filename)?;
         let config: Config = serde_json::from_str(&data)?;
         Ok(config)
-    }
-
-    pub fn get_key(parsed_settings: &HashMap<String, u32>, key: &str) -> Result<u32, String> {
-        if !parsed_settings.is_empty() {
-            match parsed_settings.get(key) {
-                Some(&value) => Ok(value),
-                None => Err(String::from("Error: Cannot get key value")),
-            }
-        } else {
-            Err(String::from(
-                "Error: Cannot get key because HashMap is empty",
-            ))
-        }
     }
 
     pub fn print_vector<T: std::fmt::Debug>(vector: &Vec<T>) {
