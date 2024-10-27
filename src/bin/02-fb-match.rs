@@ -1,6 +1,6 @@
 // Copyright 2024 Adam Burucs. MIT license.
 
-use helpers::{print_vector, read_config, Config};
+use helpers::{print_vector, read_config};
 use scaling_fizzbuzz::*;
 use std::error::Error;
 
@@ -27,8 +27,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Match loop version");
     println!();
 
-    let config = read_config("config.json")?;
-    let parsed_settings: Config = config;
+    let parsed_settings = read_config("config.json")?;
     let max_iter: u32 = parsed_settings.max_iter;
 
     let fb = fizz_buzz_match(max_iter);

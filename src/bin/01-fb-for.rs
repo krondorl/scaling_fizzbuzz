@@ -1,6 +1,6 @@
 // Copyright 2024 Adam Burucs. MIT license.
 
-use helpers::{read_config, Config};
+use helpers::read_config;
 use scaling_fizzbuzz::*;
 use std::error::Error;
 
@@ -27,8 +27,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("For loop version");
     println!();
 
-    let config = read_config("config.json")?;
-    let parsed_settings: Config = config;
+    let parsed_settings = read_config("config.json")?;
     let max_iter: u32 = parsed_settings.max_iter;
 
     fizz_buzz_for(max_iter);
