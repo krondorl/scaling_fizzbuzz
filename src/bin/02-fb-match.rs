@@ -2,24 +2,30 @@
 
 use helpers::{print_vector, read_config};
 use scaling_fizzbuzz::*;
-use std::error::Error;
+use std::{borrow::Cow, error::Error};
 
-fn fizz_buzz_match(n: u32) -> Result<Vec<String>, String> {
+fn fizz_buzz_match(n: u32) -> Result<Vec<Cow<'static, str>>, String> {
     if n < 3 {
         return Err(String::from("Error: input parameter should be at least 3."));
     }
-    let mut result: Vec<String> = Vec::new();
-    for i in 1..=n {
-        match i % 15 {
-            0 => result.push(String::from("FizzBuzz")),
-            3 | 6 | 9 | 12 => result.push(String::from("Fizz")),
-            5 | 10 => result.push(String::from("Buzz")),
-            _ => {
-                result.push(i.to_string());
+    let n_as_usize = n.try_into();
+    match n_as_usize {
+        Ok(n) => {
+            let mut result: Vec<Cow<'static, str>> = Vec::with_capacity(n);
+            for i in 1..=n {
+                match i % 15 {
+                    0 => result.push(Cow::Borrowed("FizzBuzz")),
+                    3 | 6 | 9 | 12 => result.push(Cow::Borrowed("Fizz")),
+                    5 | 10 => result.push(Cow::Borrowed("Buzz")),
+                    _ => {
+                        result.push(Cow::Owned(i.to_string()));
+                    }
+                };
             }
-        };
+            Ok(result)
+        }
+        Err(_) => Err(String::from("Error: can't convert n into usize.")),
     }
-    Ok(result)
 }
 
 fn main() -> Result<(), Box<dyn Error>> {

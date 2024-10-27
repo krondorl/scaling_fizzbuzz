@@ -3,24 +3,24 @@
 use helpers::{print_vector, read_config};
 use rayon::prelude::*;
 use scaling_fizzbuzz::*;
-use std::error::Error;
+use std::{borrow::Cow, error::Error};
 
-fn fizz_buzz_par_iter(numbers: &Vec<u32>) -> Result<Vec<String>, String> {
+fn fizz_buzz_par_iter(numbers: &Vec<u32>) -> Result<Vec<Cow<'static, str>>, String> {
     if numbers.len() < 3 {
         return Err(String::from("Error: input parameter should be at least 3."));
     }
 
-    let results: Vec<String> = numbers
+    let results: Vec<Cow<'static, str>> = numbers
         .par_iter()
         .map(|&i| {
             if i % 15 == 0 {
-                "FizzBuzz".to_string()
+                Cow::Borrowed("FizzBuzz")
             } else if i % 3 == 0 {
-                "Fizz".to_string()
+                Cow::Borrowed("Fizz")
             } else if i % 5 == 0 {
-                "Buzz".to_string()
+                Cow::Borrowed("Buzz")
             } else {
-                i.to_string()
+                Cow::Owned(i.to_string())
             }
         })
         .collect();
